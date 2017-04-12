@@ -7,18 +7,22 @@ import ReactDOM from 'react-dom'
 class Phone extends React.Component{
     constructor(props){
         super(props);
-        this.state = {value:'1256454',helptxt:"",mode:null}
+        // this.state = {value:'1256454',helptxt:"",mode:null}
+        this.state={
+            userName:null,
+            passpoart:null
+        }
     }
     handleChange(event) {
     this.setState({value: event.target.value});
         let num=event.target.value;
-        if(!(/^1[34578]\d{9}$/.test(num))){
+
+        if(!(/^1[34578]\d{9}$/.test())){
             this.setState({helptxt:"号码输入不正确",mode:false})
         }else{
             alert("验证成功")
             this.setState({helptxt:"成功",mode:true})
         }
-
     }
     render(){
         let classname="";                ///对显示样式进行修改
@@ -41,15 +45,34 @@ class Phone extends React.Component{
 class Name extends React.Component{
 
 }
+class Foot extends React.Component{
+    render(){
+        return(
+        <input type='button' value='提交' onClicki={this.checkForm}/>
+        )
+    }
+}
 class Form extends React.Component{
     render(){
         return(
             <form>
                 <Phone/>
+                <Foot/>
             </form>
         )
     }
 }
 
+//
+// ReactDOM.render(<Form />,document.getElementById('main'));
+/*
 
-ReactDOM.render(<Form />,document.getElementById('main'));
+class inputSample
+    input props
+this.state={value= this.props.xxx
+propstype
+
+class buttom {
+    this.props.array [func,func]
+}
+*}*/

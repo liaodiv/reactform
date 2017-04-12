@@ -4,7 +4,7 @@
 var path = require('path');
 var webpack = require('webpack');
 module.exports = {
-    entry:'./main.js',
+    entry:'./mian2.js',
     output:{
         path:path.join(__dirname,'/public/javascripts'),
         filename:'bundle.js'

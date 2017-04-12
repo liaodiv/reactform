@@ -10002,105 +10002,141 @@ var _reactDom2 = _interopRequireDefault(_reactDom);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; } /**
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                * Created by 27353 on 2017/4/11.
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                * Created by 27353 on 2017/4/12.
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 */
 
 
-var Phone = function (_React$Component) {
-    _inherits(Phone, _React$Component);
+var FF = function (_React$Component) {
+    _inherits(FF, _React$Component);
 
-    function Phone(props) {
-        _classCallCheck(this, Phone);
+    function FF() {
+        _classCallCheck(this, FF);
 
-        var _this = _possibleConstructorReturn(this, (Phone.__proto__ || Object.getPrototypeOf(Phone)).call(this, props));
+        //this.state ={phone:{value:''},name:{value:''}};
+        //this.state = [{name: 'phone', value:''}, {name:'name',value:''}];
+        var _this = _possibleConstructorReturn(this, (FF.__proto__ || Object.getPrototypeOf(FF)).call(this));
 
-        _this.state = { value: '1256454', helptxt: "", mode: null };
+        _this.state = {
+            name: "",
+            phone: "",
+            nameWarning: ["", ""],
+            phoneWarning: ["", ""]
+        };
         return _this;
     }
 
-    _createClass(Phone, [{
-        key: 'handleChange',
-        value: function handleChange(event) {
-            this.setState({ value: event.target.value });
-            var num = event.target.value;
-            if (!/^1[34578]\d{9}$/.test(num)) {
-                this.setState({ helptxt: "号码输入不正确", mode: false });
-            } else {
-                alert("验证成功");
-                this.setState({ helptxt: "成功", mode: true });
+    _createClass(FF, [{
+        key: 'getdefault',
+        value: function getdefault(sta) {//获取数据库已存储的值
+
+        }
+    }, {
+        key: 'handleChang',
+        value: function handleChang(event) {
+            var key = event.target.name;
+            var value = event.target.value;
+            this.checking(key, value);
+            this.setState(_defineProperty({}, key, value));
+
+            //this.setState([])
+        }
+    }, {
+        key: 'checking',
+        value: function checking(key, value) {
+            ////验证
+            switch (key) {
+                case 'phone':
+                    {
+
+                        if (!/^1(3|4|5|7|8)\d{9}$/.test(value)) {
+
+                            this.setState({ phoneWarning: ["输入不正确", "has-error"] });
+                            return false;
+                        } else {
+                            this.setState({ phoneWarning: ["成功", "has-success"] });
+                            return true;
+                        }
+                    }
+                    break;
+                case 'name':
+                    {
+                        if (value) {
+                            this.setState({ nameWarning: ["成功", "has-success"] });
+                            return false;
+                        } else {
+                            this.setState({ nameWarning: ["输入不正确", "has-error"] });
+                            return true;
+                        }
+                    }
+                    break;
             }
+        }
+    }, {
+        key: 'subcheck',
+        value: function subcheck() {
+            if (this.checking('phone', this.state.phone) && this.checking('name', this.state.name)) {}
+            ///提交
+
+            /* this.checking('phone');
+             this.checking('name');*/
         }
     }, {
         key: 'render',
         value: function render() {
-            var classname = ""; ///对显示样式进行修改
-            if (this.state.mode === true) {
-                classname = "has-success";
-            } else if (this.state.mode === false) {
-                classname = "has-error";
-            }
+            ///渲染时验证，方便处理样式
             return _react2.default.createElement(
-                'div',
-                { className: classname + " form-group form-inline" },
+                'form',
+                null,
                 _react2.default.createElement(
-                    'label',
-                    { className: 'control-label' },
-                    '\u7535\u8BDD'
+                    'div',
+                    { className: "form-group " + this.state.phoneWarning[1] },
+                    _react2.default.createElement(
+                        'label',
+                        { className: 'control-label' },
+                        '\u7535\u8BDD'
+                    ),
+                    _react2.default.createElement('input', { className: 'form-control', type: 'text', name: 'phone', onChange: this.handleChang.bind(this) }),
+                    _react2.default.createElement(
+                        'span',
+                        { className: 'help-block' },
+                        this.state.phoneWarning[0]
+                    )
                 ),
-                _react2.default.createElement('input', { className: 'form-control', type: 'text', value: this.state.value, onChange: this.handleChange.bind(this) }),
                 _react2.default.createElement(
-                    'span',
-                    { className: 'help-block' },
-                    this.state.helptxt
+                    'div',
+                    { className: "form-group " + this.state.nameWarning[1] },
+                    _react2.default.createElement(
+                        'label',
+                        { className: 'control-label' },
+                        '\u59D3\u540D'
+                    ),
+                    _react2.default.createElement('input', { className: 'form-control', type: 'text', name: 'name', onChange: this.handleChang.bind(this) }),
+                    _react2.default.createElement(
+                        'span',
+                        { className: 'help-block' },
+                        this.state.nameWarning[0]
+                    )
+                ),
+                _react2.default.createElement(
+                    'button',
+                    { type: 'button', onClick: this.subcheck.bind(this) },
+                    '\u63D0\u4EA4'
                 )
             );
         }
     }]);
 
-    return Phone;
+    return FF;
 }(_react2.default.Component);
 
-var Name = function (_React$Component2) {
-    _inherits(Name, _React$Component2);
-
-    function Name() {
-        _classCallCheck(this, Name);
-
-        return _possibleConstructorReturn(this, (Name.__proto__ || Object.getPrototypeOf(Name)).apply(this, arguments));
-    }
-
-    return Name;
-}(_react2.default.Component);
-
-var Form = function (_React$Component3) {
-    _inherits(Form, _React$Component3);
-
-    function Form() {
-        _classCallCheck(this, Form);
-
-        return _possibleConstructorReturn(this, (Form.__proto__ || Object.getPrototypeOf(Form)).apply(this, arguments));
-    }
-
-    _createClass(Form, [{
-        key: 'render',
-        value: function render() {
-            return _react2.default.createElement(
-                'form',
-                null,
-                _react2.default.createElement(Phone, null)
-            );
-        }
-    }]);
-
-    return Form;
-}(_react2.default.Component);
-
-_reactDom2.default.render(_react2.default.createElement(Form, null), document.getElementById('main'));
+_reactDom2.default.render(_react2.default.createElement(FF, null), document.getElementById('main'));
 
 /***/ }),
 /* 83 */
